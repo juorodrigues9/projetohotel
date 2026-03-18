@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Room {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roomNumber String   @unique @map("room_number")
+  capacity   Int
+  dailyRate  Decimal  @map("daily_rate") @db.Decimal(12, 2)
+  description String?
+  notes      String?
+  status     String
+
+  @@map("rooms")
+}
